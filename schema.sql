@@ -1,5 +1,5 @@
 -- Check and see if the posts table already exists, if it does, drop it
-DROP TABLE IF EXISTS ;
+DROP TABLE IF EXISTS posts;
 
 -- Check and see if the users table already exists, if it does, drop it
 DROP TABLE IF EXISTS users;
