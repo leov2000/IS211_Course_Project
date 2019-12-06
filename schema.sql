@@ -11,6 +11,7 @@ CREATE TABLE posts (
     title TEXT,
     content TEXT,
     category TEXT,
+    ishidden BOOLEAN,
     published DATE
 );
 
