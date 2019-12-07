@@ -1,13 +1,23 @@
-from flask import Flask, session, request
+from flask import Flask, session, request, jsonify
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+from utilities import query_blogs_and_user, transform_to_dict
 
 app = Flask(__name__)
 conn = sqlite3.connect('blog.db', check_same_thread=False)
 
 @app.route('/posts')
 def get_posts():
+    cursor = conn.cursor()
+    query = query_blogs_and_user()
+    
+    cursor.execute(query)
+    result = cursor.fetchall()
+    dict_values = transform_to_dict(result)
+
+
+    return jsonify(dict_values)
     #show all the blog posts
     # query db for all posts 
     pass
@@ -29,7 +39,8 @@ def insert_post():
 def delete_post(id):
     # search for post
     # delete post 
-    # send back successful JSON response 
+    # send back successful JSON response
+    pass
 
 @app.route('/login', methods=['POST'])
 def admin_login():
