@@ -73672,7 +73672,16 @@ module.exports.default = axios;
 
 },{"./utils":"../node_modules/axios/lib/utils.js","./helpers/bind":"../node_modules/axios/lib/helpers/bind.js","./core/Axios":"../node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"../node_modules/axios/lib/core/mergeConfig.js","./defaults":"../node_modules/axios/lib/defaults.js","./cancel/Cancel":"../node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"../node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"../node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"../node_modules/axios/lib/helpers/spread.js"}],"../node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"components/home/index.js":[function(require,module,exports) {
+},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"config/nav-config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = ['All', 'Sports', 'Lifestyle', 'Politics', 'Fashion', 'Architecture', 'Local', 'Eats', 'Home', 'Finance'];
+exports.default = _default;
+},{}],"components/home/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73687,6 +73696,8 @@ var _blog = _interopRequireDefault(require("../blog"));
 var _axios = _interopRequireDefault(require("axios"));
 
 var _lodash = require("lodash");
+
+var _navConfig = _interopRequireDefault(require("../../config/nav-config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73726,7 +73737,8 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, props));
     _this.state = {
-      blogList: []
+      blogList: [],
+      active: ''
     };
     return _this;
   }
@@ -73748,9 +73760,15 @@ function (_Component) {
     key: "render",
     value: function render() {
       var blogList = this.state.blogList;
+      console.log(this.state, 'THE STATE');
+      console.log(_navConfig.default, 'NAV-CONFIG');
       return _react.default.createElement("div", {
         className: "blogs-view"
-      }, (0, _lodash.isEmpty)(blogList) ? _react.default.createElement("h2", {
+      }, _react.default.createElement("div", {
+        className: "blog-nav-bar"
+      }, _navConfig.default.map(function (nav) {
+        return _react.default.createElement("h3", null, nav);
+      })), (0, _lodash.isEmpty)(blogList) ? _react.default.createElement("h2", {
         className: "no-posts"
       }, " No Posts ") : blogList.flatMap(function (obj) {
         return obj.isHidden === "true" ? [] : _react.default.createElement(_blog.default, _extends({
@@ -73764,7 +73782,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Home;
-},{"react":"../node_modules/react/index.js","../blog":"components/blog/index.js","axios":"../node_modules/axios/index.js","lodash":"../node_modules/lodash/lodash.js"}],"components/header/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../blog":"components/blog/index.js","axios":"../node_modules/axios/index.js","lodash":"../node_modules/lodash/lodash.js","../../config/nav-config":"config/nav-config.js"}],"components/header/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
