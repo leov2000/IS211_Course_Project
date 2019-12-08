@@ -6,10 +6,12 @@ from utilities import query_blogs_and_user, transform_to_dict
 
 app = Flask(__name__)
 conn = sqlite3.connect('blog.db', check_same_thread=False)
+bundle_js = '/static/src.e31bb0bc.js'
+bundle_css = '/static/src.e31bb0bc.css'
 
 @app.route('/')
 def index():
-    return render_template('index.html', cache_bust=random.random())
+    return render_template('index.html', cache_bust=random.random(), bundle_js=bundle_js, bundle_css=bundle_css)
 
 @app.route('/posts')
 def get_posts():
@@ -46,7 +48,7 @@ def delete_post(id):
 
 @app.route('/login')
 def get_login():
-    return render_template('index.html', cache_bust=random.random())
+    return render_template('index.html', cache_bust=random.random(), bundle_js=bundle_js, bundle_css=bundle_css)
 
 @app.route('/login', methods=['POST'])
 def admin_login():
