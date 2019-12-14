@@ -37464,42 +37464,82 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Login).call(this, props));
     _this.state = {
-      form: {
-        user: ''
-      }
+      user: '',
+      password: '',
+      error: false
     };
     return _this;
   }
 
   _createClass(Login, [{
     key: "submitFormRequest",
-    value: function submitFormRequest(values) {
-      console.log(values, 'values here');
-      values.preventDefault();
+    value: function submitFormRequest() {
+      var _this$state = this.state,
+          user = _this$state.user,
+          password = _this$state.password;
+    }
+  }, {
+    key: "handleUserInput",
+    value: function handleUserInput(event) {
+      this.setState({
+        user: event.target.value
+      });
+    }
+  }, {
+    key: "handlePasswordInput",
+    value: function handlePasswordInput(event) {
+      this.setState({
+        password: event.target.value
+      });
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
+      var _this$state2 = this.state,
+          user = _this$state2.user,
+          password = _this$state2.password;
       return _react.default.createElement("div", {
         className: "login-container"
       }, _react.default.createElement("div", {
         className: "login-form-container"
-      }, _react.default.createElement("h2", null, "Login or Sign up!", _react.default.createElement("span", {
+      }, !this.state.error ? _react.default.createElement("h2", null, "Login or Sign up!", _react.default.createElement("span", {
         className: "mini-header-under"
+      })) : _react.default.createElement("h2", {
+        className: "form-login-error"
+      }, "Error! Try again!", _react.default.createElement("span", {
+        className: "mini-header-under-error"
       })), _react.default.createElement("form", {
         name: "loginForm",
-        onSubmit: this.submitFormRequest
+        onSubmit: function onSubmit() {
+          return _this2.submitFormRequest();
+        }
       }, _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "input-container"
       }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Username")), _react.default.createElement("input", {
-        type: "text"
+        type: "text",
+        name: "user",
+        value: user,
+        onChange: function onChange(event) {
+          return _this2.handleUserInput(event);
+        }
       })), _react.default.createElement("div", {
         className: "input-container"
       }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Password")), _react.default.createElement("input", {
-        type: "password"
+        type: "password",
+        name: "password",
+        value: password,
+        onChange: function onChange(event) {
+          return _this2.handlePasswordInput(event);
+        }
       }))), _react.default.createElement("div", {
         className: "form-submit-button"
-      }, _react.default.createElement("span", null, "SUBMIT")))));
+      }, _react.default.createElement("span", {
+        onClick: function onClick() {
+          return _this2.submitFormRequest();
+        }
+      }, "SUBMIT")))));
     }
   }]);
 
@@ -74137,7 +74177,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61517" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51281" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
