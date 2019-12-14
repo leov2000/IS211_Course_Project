@@ -71854,16 +71854,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  sports: 'https://imagesvc.timeincapp.com/v3/mm/image?url=https://cdn-s3.si.com/images/football-pylon.jpg&w=400&h=300&c=sc&poi=face&q=85',
-  lifestyle: 'https://www.rifemagazine.co.uk/wp-content/uploads/2019/10/martyna-bober-AeLUd79Rjoo-unsplash-400x300.jpg',
-  politics: 'https://news.psu.edu/sites/default/files/styles/gss_thumbnail/public/800px-US_Flag_Backlit.jpg',
-  fashion: 'https://cf.ltkcdn.net/fashion-history/images/std/169251-400x300-fashion-poster-ads.jpg',
-  architecture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Feuerwehrhaus_von_Zaha_Hadid_bei_Vitra_in_Weil_am_Rhein_an_der_%C3%81lvaro-Siza-Promenade_2.jpg/400px-Feuerwehrhaus_von_Zaha_Hadid_bei_Vitra_in_Weil_am_Rhein_an_der_%C3%81lvaro-Siza-Promenade_2.jpg',
-  local: 'https://www.redfirefarm.com/wp-content/uploads/2016/02/springfieldfarmersmarketIMG_4363edit-400x300.jpg',
-  eats: 'https://dsu113jcnntrj.cloudfront.net/wp-content/uploads/2015/07/DSC_0028-e1438796605578-400x300.jpg',
-  home: 'https://www.cliqstudios.com/images/Sample-Box-Rear-Render-6-400x300.jpg',
-  finance: 'https://sgp1.digitaloceanspaces.com/cas-img/wp-content/uploads/2019/07/13091322/wall-street-bull-400x300.jpg',
-  fallback: 'http://www.ryukyu.ac.jp/wp-content/uploads/2012/09/Tulips-400x300.jpg'
+  sports: '/static/images/sports.jpg',
+  lifestyle: '/static/images/lifestyle.jpg',
+  politics: '/static/images/politics.jpg',
+  fashion: '/static/images/fashion.jpg',
+  architecture: '/static/images/architecture.jpg',
+  local: '/static/images/local.jpg',
+  eats: '/static/images/eats.jpg',
+  home: '/static/images/home.jpg',
+  finance: '/static/images/finance.jpg',
+  fallback: '/static/images/fallback.jpg'
 };
 exports.default = _default;
 },{}],"components/blog/index.js":[function(require,module,exports) {
@@ -73757,9 +73757,34 @@ function (_Component) {
       });
     }
   }, {
+    key: "filterByTopic",
+    value: function filterByTopic(navItem) {
+      var _this3 = this;
+
+      var topic = navItem.toLowerCase();
+
+      _axios.default.get('/posts', {
+        params: {
+          topic: topic
+        }
+      }).then(function (res) {
+        var data = res.data;
+        console.log(res, 'RESPONSE');
+
+        _this3.setState({
+          active: navItem,
+          blogList: data
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var blogList = this.state.blogList;
+      var _this4 = this;
+
+      var _this$state = this.state,
+          blogList = _this$state.blogList,
+          active = _this$state.active;
       console.log(this.state, 'THE STATE');
       console.log(_navConfig.default, 'NAV-CONFIG');
       return _react.default.createElement("div", {
@@ -73767,7 +73792,13 @@ function (_Component) {
       }, _react.default.createElement("div", {
         className: "blog-nav-bar"
       }, _navConfig.default.map(function (nav) {
-        return _react.default.createElement("h3", null, nav);
+        return _react.default.createElement("h3", {
+          className: active === nav ? "blog-nav-item-active" : "blog-nav-item",
+          key: (0, _lodash.uniqueId)(),
+          onClick: function onClick() {
+            return _this4.filterByTopic(nav);
+          }
+        }, nav);
       })), (0, _lodash.isEmpty)(blogList) ? _react.default.createElement("h2", {
         className: "no-posts"
       }, " No Posts ") : blogList.flatMap(function (obj) {
@@ -74069,7 +74100,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40537" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52826" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
