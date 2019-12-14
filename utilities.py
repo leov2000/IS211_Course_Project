@@ -29,7 +29,8 @@ def query_blogs_and_user():
     posts.content AS 'CONTENT',
     users.user_name AS 'USER'
     FROM posts
-    JOIN users ON users.users_id = posts.users_id;
+    JOIN users ON users.users_id = posts.users_id
+    ORDER BY strftime('%s', posts.published) DESC;
     """
 
     return sql_query
@@ -46,7 +47,8 @@ def query_topic(topic):
     users.user_name AS 'USER'
     FROM posts
     JOIN users ON users.users_id = posts.users_id
-    WHERE posts.category = '{topic}';
+    WHERE posts.category = '{topic}'
+    ORDER BY strftime('%s', posts.published) DESC;
     """
     
     return sql_query
