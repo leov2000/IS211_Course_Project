@@ -9,9 +9,20 @@ conn = sqlite3.connect('blog.db', check_same_thread=False)
 bundle_js = '/static/src.e31bb0bc.js'
 bundle_css = '/static/src.e31bb0bc.css'
 
+def render_javascript_assets():
+    return render_template('index.html', cache_bust=random.random(), bundle_js=bundle_js, bundle_css=bundle_css)
+
 @app.route('/')
 def index():
-    return render_template('index.html', cache_bust=random.random(), bundle_js=bundle_js, bundle_css=bundle_css)
+    return render_javascript_assets()
+
+@app.route('/dashboard')
+def get_dashboard():
+    return render_javascript_assets()
+
+@app.route('/login')
+def get_login():
+    return render_javascript_assets()
 
 @app.route('/posts')
 def get_posts():
@@ -47,10 +58,6 @@ def delete_post(id):
     # delete post 
     # send back successful JSON response
     pass
-
-@app.route('/login')
-def get_login():
-    return render_template('index.html', cache_bust=random.random(), bundle_js=bundle_js, bundle_css=bundle_css)
 
 @app.route('/login', methods=['POST'])
 def admin_login():
