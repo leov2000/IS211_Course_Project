@@ -35749,7 +35749,25 @@ function (_Component) {
   _createClass(Login, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("h2", null, "Login");
+      return _react.default.createElement("div", {
+        className: "login-container"
+      }, _react.default.createElement("div", {
+        className: "form-container"
+      }, _react.default.createElement("h2", null, "Login or Sign up!", _react.default.createElement("span", {
+        className: "mini-header-under"
+      })), _react.default.createElement("form", {
+        name: "loginForm"
+      }, _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "input-container"
+      }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Username")), _react.default.createElement("input", {
+        type: "text"
+      })), _react.default.createElement("div", {
+        className: "input-container"
+      }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Password")), _react.default.createElement("input", {
+        type: "password"
+      }))), _react.default.createElement("button", {
+        className: "form-submit-button"
+      }, "SUBMIT"))));
     }
   }]);
 
@@ -74100,7 +74118,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45201" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36973" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
