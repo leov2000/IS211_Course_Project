@@ -107,7 +107,6 @@ body {
 
 .blog-nav-item-active {
     text-decoration: underline;
-    text-decoration-style: wavy;
     text-decoration-color: azure;
 }
 
