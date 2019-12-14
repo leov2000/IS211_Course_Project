@@ -101,4 +101,14 @@ body {
     justify-content: space-between;
 }
 
+.blog-nav-item {
+    cursor: pointer;
+}
+
+.blog-nav-item-active {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: azure;
+}
+
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
