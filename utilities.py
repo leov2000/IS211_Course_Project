@@ -34,6 +34,23 @@ def query_blogs_and_user():
 
     return sql_query
 
+def query_topic(topic):
+
+    sql_query = f"""
+    SELECT
+    posts.title AS 'TITLE',
+    posts.category AS CATEGORY,
+    posts.ishidden AS 'HIDDEN',
+    posts.published AS 'PUBLISHED',
+    posts.content AS 'CONTENT',
+    users.user_name AS 'USER'
+    FROM posts
+    JOIN users ON users.users_id = posts.users_id
+    WHERE posts.category = '{topic}';
+    """
+    
+    return sql_query
+
 def transform_to_dict(val_list):
     key_config = ('title', 'category', 'isHidden', 'pub_date', 'content', 'user')
 
