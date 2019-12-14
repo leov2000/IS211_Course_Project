@@ -15,6 +15,8 @@ def index():
 
 @app.route('/posts')
 def get_posts():
+    topic = request.args.get('topic')
+    print(topic, 'TOPIC HERE')
     cursor = conn.cursor()
     query = query_blogs_and_user()
     
