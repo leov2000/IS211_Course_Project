@@ -37477,12 +37477,19 @@ function (_Component) {
       var _this$state = this.state,
           user = _this$state.user,
           password = _this$state.password;
-      this.props.history.push({
-        pathname: '/dashboard',
-        state: {
-          user: user
-        }
-      });
+
+      if (user && password) {
+        _axios.default.post('/signin', {
+          user: user,
+          password: password
+        }).then(function (res) {
+          console.log(res, 'RESPONSE');
+        });
+      } else {
+        this.setState({
+          error: true
+        });
+      }
     }
   }, {
     key: "handleUserInput",
@@ -73852,7 +73859,6 @@ function (_Component) {
         }
       }).then(function (res) {
         var data = res.data;
-        console.log(res, 'RESPONSE');
 
         _this3.setState({
           active: navItem,
@@ -73868,8 +73874,6 @@ function (_Component) {
       var _this$state = this.state,
           blogList = _this$state.blogList,
           active = _this$state.active;
-      console.log(this.state, 'THE STATE');
-      console.log(_navConfig.default, 'NAV-CONFIG');
       return _react.default.createElement("div", {
         className: "blogs-view"
       }, _react.default.createElement("div", {
@@ -74249,7 +74253,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50583" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49195" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
