@@ -74809,6 +74809,13 @@ function (_Component) {
       console.log('delete');
     }
   }, {
+    key: "showModal",
+    value: function showModal() {
+      this.setState({
+        open: true
+      });
+    }
+  }, {
     key: "closeModal",
     value: function closeModal() {
       this.setState({
@@ -74844,7 +74851,10 @@ function (_Component) {
       }, _react.default.createElement("h1", {
         className: "modal-title"
       }, "Edit"), _react.default.createElement("span", {
-        className: "modal-close-icon"
+        className: "modal-close-icon",
+        onClick: function onClick() {
+          return _this3.closeModal();
+        }
       }, "X")), _react.default.createElement("div", {
         className: "modal-form"
       }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Title"), _react.default.createElement("input", {
@@ -74883,9 +74893,14 @@ function (_Component) {
         href: "/login"
       }, "login")) : _react.default.createElement("div", {
         className: "dashboard-pane"
-      }, _react.default.createElement("div", null, _react.default.createElement("div", null, _react.default.createElement("h3", {
-        className: "admin-add-blog"
-      }, "Add Blog"))), _react.default.createElement("div", {
+      }, _react.default.createElement("div", {
+        className: "admin-add-blog-container"
+      }, _react.default.createElement("span", {
+        className: "admin-add-blog",
+        onClick: function onClick() {
+          return _this3.showModal();
+        }
+      }, _react.default.createElement("h3", null, "Add Blog"))), _react.default.createElement("div", {
         className: "admin-blog-container"
       }, _react.default.createElement("table", {
         className: "admin-blog-table"
@@ -75162,7 +75177,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49508" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49263" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
