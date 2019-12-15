@@ -37474,6 +37474,8 @@ function (_Component) {
   _createClass(Login, [{
     key: "submitFormRequest",
     value: function submitFormRequest() {
+      var _this2 = this;
+
       var _this$state = this.state,
           user = _this$state.user,
           password = _this$state.password;
@@ -37483,11 +37485,23 @@ function (_Component) {
           user: user,
           password: password
         }).then(function (res) {
-          console.log(res, 'RESPONSE');
-        });
-      } else {
-        this.setState({
-          error: true
+          var data = res.data;
+          var verified = data.verified;
+
+          if (verified) {
+            _this2.props.history.push({
+              pathname: '/dashboard',
+              state: {
+                user: user
+              }
+            });
+          }
+        }).catch(function (err) {
+          console.log(err, 'ERROR-AT-LOGIN');
+
+          _this2.setState({
+            error: true
+          });
         });
       }
     }
@@ -37508,7 +37522,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$state2 = this.state,
           user = _this$state2.user,
@@ -37526,7 +37540,7 @@ function (_Component) {
       })), _react.default.createElement("form", {
         name: "loginForm",
         onSubmit: function onSubmit() {
-          return _this2.submitFormRequest();
+          return _this3.submitFormRequest();
         }
       }, _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "input-container"
@@ -37535,7 +37549,7 @@ function (_Component) {
         name: "user",
         value: user,
         onChange: function onChange(event) {
-          return _this2.handleUserInput(event);
+          return _this3.handleUserInput(event);
         }
       })), _react.default.createElement("div", {
         className: "input-container"
@@ -37544,13 +37558,13 @@ function (_Component) {
         name: "password",
         value: password,
         onChange: function onChange(event) {
-          return _this2.handlePasswordInput(event);
+          return _this3.handlePasswordInput(event);
         }
       }))), _react.default.createElement("div", {
         className: "form-submit-button"
       }, _react.default.createElement("span", {
         onClick: function onClick() {
-          return _this2.submitFormRequest();
+          return _this3.submitFormRequest();
         }
       }, "SUBMIT")))));
     }
@@ -73970,6 +73984,10 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _lodash = require("lodash");
 
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -74004,11 +74022,30 @@ function (_Component) {
   }
 
   _createClass(Dashboard, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var location = this.props.location;
+      var state = location.state;
+      var user = (0, _lodash.get)(state, 'user', false);
+
+      if (user) {
+        _axios.default.get('/admin', {
+          params: {
+            user: user
+          }
+        }).then(function (res) {
+          var data = res.data;
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var location = this.props.location;
       var state = location.state;
       var user = (0, _lodash.get)(state, 'user', false);
+      console.log(this.state, 'THE STATE');
+      console.log(this.props, 'THEPROPS');
       return _react.default.createElement("div", null, !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
         href: "/login"
       }, "login")) : _react.default.createElement("h2", null, "DASHBOARD HERE"));
@@ -74019,7 +74056,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Dashboard;
-},{"react":"../node_modules/react/index.js","lodash":"../node_modules/lodash/lodash.js"}],"components/landing/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","lodash":"../node_modules/lodash/lodash.js","axios":"../node_modules/axios/index.js"}],"components/landing/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
