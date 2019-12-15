@@ -74032,6 +74032,8 @@ function (_Component) {
   _createClass(Dashboard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       var location = this.props.location;
       var state = location.state;
       var user = (0, _lodash.get)(state, 'user', false);
@@ -74043,18 +74045,73 @@ function (_Component) {
           }
         }).then(function (res) {
           var data = res.data;
+
+          _this2.setState({
+            blogPosts: data
+          });
         });
       }
     }
   }, {
+    key: "editBlogPost",
+    value: function editBlogPost() {
+      console.log('edit');
+    }
+  }, {
+    key: "deleteBlogPost",
+    value: function deleteBlogPost() {
+      console.log('delete');
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var location = this.props.location;
       var state = location.state;
       var user = (0, _lodash.get)(state, 'user', false);
+      var blogPosts = this.state.blogPosts;
+      console.log(blogPosts, 'BLOGPOSTS HERE');
       return _react.default.createElement("div", null, !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
         href: "/login"
-      }, "login")) : _react.default.createElement("h2", null, "DASHBOARD HERE"));
+      }, "login")) : _react.default.createElement("div", {
+        className: "dashboard-pane"
+      }, _react.default.createElement("div", null, _react.default.createElement("div", null, _react.default.createElement("span", null, "Add Blog"))), _react.default.createElement("div", {
+        className: "admin-blog-container"
+      }, _react.default.createElement("table", {
+        className: "admin-blog-table"
+      }, _react.default.createElement("caption", null, user, " Blog Posts"), _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Content"), _react.default.createElement("th", null, "Post Hidden"), _react.default.createElement("th", null, "Publish Date"), _react.default.createElement("th", null, "Category"), _react.default.createElement("th", null, "Edit"), _react.default.createElement("th", null, "Delete"))), _react.default.createElement("tbody", null, blogPosts.map(function (blog) {
+        return _react.default.createElement("tr", {
+          key: (0, _lodash.uniqueId)()
+        }, _react.default.createElement("td", {
+          className: "content-td",
+          width: "200",
+          key: (0, _lodash.uniqueId)()
+        }, " ", blog.title, " "), _react.default.createElement("td", {
+          className: "content-td",
+          width: "200",
+          key: (0, _lodash.uniqueId)()
+        }, " ", blog.content, " "), _react.default.createElement("td", {
+          width: "150",
+          key: (0, _lodash.uniqueId)()
+        }, " ", blog.isHidden, " "), _react.default.createElement("td", {
+          width: "150",
+          key: (0, _lodash.uniqueId)()
+        }, " ", blog.pub_date, " "), _react.default.createElement("td", {
+          width: "150",
+          key: (0, _lodash.uniqueId)()
+        }, " ", blog.category, " "), _react.default.createElement("td", {
+          width: "150",
+          onClick: function onClick() {
+            return _this3.editBlogPost();
+          }
+        }, _react.default.createElement("span", null, "Edit")), _react.default.createElement("td", {
+          width: "150",
+          onClick: function onClick() {
+            return _this3.deleteBlogPost();
+          }
+        }, _react.default.createElement("span", null, "Delete")));
+      }))))));
     }
   }]);
 
