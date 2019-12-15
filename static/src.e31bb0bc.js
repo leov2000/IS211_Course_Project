@@ -74731,6 +74731,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
+var _navConfig = _interopRequireDefault(require("../../config/nav-config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -74754,8 +74756,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-console.log(_reactjsPopup.default, 'POPUP HERE');
 
 var Dashboard =
 /*#__PURE__*/
@@ -74834,10 +74834,52 @@ function (_Component) {
         contentStyle: {
           padding: "0px",
           border: "1px white solid",
-          minHeight: "600px",
+          minHeight: "500px",
           background: "#36D1DC"
         }
-      }, _react.default.createElement("div", null, _react.default.createElement("h1", null, "hi hi hi"))), !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
+      }, _react.default.createElement("div", {
+        className: "modal-container"
+      }, _react.default.createElement("div", {
+        className: "modal-header"
+      }, _react.default.createElement("h1", {
+        className: "modal-title"
+      }, "Edit"), _react.default.createElement("span", {
+        className: "modal-close-icon"
+      }, "X")), _react.default.createElement("div", {
+        className: "modal-form"
+      }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Title"), _react.default.createElement("input", {
+        className: "modal-input",
+        type: "text"
+      })), _react.default.createElement("div", {
+        className: "modal-drop-down-container"
+      }, _react.default.createElement("div", {
+        className: "modal-drop-down-item"
+      }, _react.default.createElement("span", null, "Category"), _react.default.createElement("select", {
+        className: "modal-drop-down"
+      }, _navConfig.default.map(function (category) {
+        return _react.default.createElement("option", {
+          key: (0, _lodash.uniqueId)(),
+          value: category.toLowerCase()
+        }, category);
+      }))), _react.default.createElement("div", {
+        className: "modal-drop-down-item"
+      }, _react.default.createElement("span", null, "Hidden"), _react.default.createElement("select", {
+        className: "modal-drop-down"
+      }, _react.default.createElement("option", {
+        value: "true"
+      }, "True"), _react.default.createElement("option", {
+        value: "false"
+      }, "False")))), _react.default.createElement("div", null, _react.default.createElement("span", null, "Publish Date"), _react.default.createElement("input", {
+        className: "modal-input",
+        type: "date"
+      })), _react.default.createElement("div", null, _react.default.createElement("span", null, "Content"), _react.default.createElement("input", {
+        className: "modal-input",
+        type: "text"
+      }))), _react.default.createElement("div", {
+        className: "modal-button"
+      }, _react.default.createElement("span", {
+        className: "admin-submit-button"
+      }, "SUBMIT")))), !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
         href: "/login"
       }, "login")) : _react.default.createElement("div", {
         className: "dashboard-pane"
@@ -74886,7 +74928,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Dashboard;
-},{"react":"../node_modules/react/index.js","lodash":"../node_modules/lodash/lodash.js","axios":"../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js"}],"components/landing/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","lodash":"../node_modules/lodash/lodash.js","axios":"../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","../../config/nav-config":"config/nav-config.js"}],"components/landing/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
