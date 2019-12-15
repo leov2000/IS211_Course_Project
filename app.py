@@ -3,7 +3,7 @@ import random
 import json 
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-from utilities import query_blogs_and_user, transform_to_dict, query_topic, get_users, check_user_password_hash, insert_new_user
+from utilities import query_blogs_and_user, transform_to_dict, query_topic, get_users, check_user_password_hash, insert_new_user, get_user_entries
 
 app = Flask(__name__)
 conn = sqlite3.connect('blog.db', check_same_thread=False)
@@ -59,6 +59,20 @@ def user_signin():
         cursor.executescript(insert_user)
 
         return (jsonify({'verified': True}), 200)
+
+@app.route('/admin')
+def admin_view():
+    user = request.args.get('user')
+
+    query = get_user_entries(user)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    dict_values = transform_to_dict(result)
+
+    return jsonify(dict_values)
+
 
 @app.route('/posts/<id>', methods=['PUT'])
 def update_post(id):
