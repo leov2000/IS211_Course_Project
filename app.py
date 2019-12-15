@@ -77,21 +77,20 @@ def admin_view():
     return jsonify(dict_values)
 
 
-@app.route('/posts/<id>', methods=['PUT'])
-def update_post(id):
+@app.route('/posts', methods=['PUT'])
+def update_post():
+    return ""
     #search for post
     # update post here
     #send back successful JSON response
-    pass 
 
 @app.route('/posts', methods=['POST'])
 def insert_post():
-    #insert post
-    # send back successful JSON response
-    pass 
+    return ""
 
-@app.route('/posts/<id>', methods=['DELETE'])
-def delete_post(id):
+@app.route('/posts', methods=['DELETE'])
+def delete_post():
+    return ""
     # search for post
     # delete post 
     # send back successful JSON response
