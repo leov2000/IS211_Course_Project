@@ -1,8 +1,9 @@
 from flask import Flask, session, request, jsonify, url_for, render_template
 import random
+import json 
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-from utilities import query_blogs_and_user, transform_to_dict, query_topic
+from utilities import query_blogs_and_user, transform_to_dict, query_topic, get_users, check_user_password_hash, insert_new_user
 
 app = Flask(__name__)
 conn = sqlite3.connect('blog.db', check_same_thread=False)
@@ -36,8 +37,28 @@ def get_posts():
     dict_values = transform_to_dict(result)
 
     return jsonify(dict_values)
-    #show all the blog posts
-    # query db for all posts 
+
+@app.route('/signin', methods=['POST'])
+def user_signin():
+    parsed = json.loads(request.data)
+    user = parsed.get('user').lower()
+    password = parsed.get('password')
+
+    query = get_users(user)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    if result:
+        is_verified = check_user_password_hash(result, password)
+        dict_values = {'verified': is_verified}
+
+        return (jsonify(dict_values), 200) if is_verified else (jsonify(dict_values), 401)
+    else:
+        insert_user = insert_new_user(user, password)
+        cursor.executescript(insert_user)
+
+        return (jsonify({'verified': True}), 200)
 
 @app.route('/posts/<id>', methods=['PUT'])
 def update_post(id):
@@ -58,25 +79,6 @@ def delete_post(id):
     # delete post 
     # send back successful JSON response
     pass
-
-@app.route('/login', methods=['POST'])
-def admin_login():
-    # check if the user exists in the DB. 
-    # send back an error if password/user is incorrect
-    pass 
-
-@app.route('/signup', methods=['POST'])
-def user_signup():
-    # signup form 
-    # take values from form
-    # add them to db
-    # send success message JSON.
-    pass 
-
-@app.route('/logout/<id>')
-def logout(id):
-    # delete session here.
-    pass 
 
 if __name__ == '__main__':
     app.run(debug=True)
