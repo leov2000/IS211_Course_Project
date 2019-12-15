@@ -75,7 +75,8 @@ def get_user_entries(user):
 
 def get_users(user):
     sql_query = f"""
-    SELECT 
+    SELECT
+    users_id as user_id, 
     user_name as user,
     users_password as password
     FROM users
@@ -86,7 +87,7 @@ def get_users(user):
 
 def check_user_password_hash(result, entered):
     user_tuple = result[0]
-    (_, hashed_password) = user_tuple
+    (id, user_name, hashed_password) = user_tuple
     verify = check_password_hash(hashed_password, entered)
 
     return verify
@@ -100,7 +101,7 @@ def insert_new_user(user, password):
     VALUES
     ('{user}','{hashed_pw}');
     """
-    
+
     return insert_user
 
 def transform_to_dict(val_list):

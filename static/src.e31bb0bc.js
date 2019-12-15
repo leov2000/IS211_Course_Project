@@ -37486,13 +37486,15 @@ function (_Component) {
           password: password
         }).then(function (res) {
           var data = res.data;
-          var verified = data.verified;
+          var verified = data.verified,
+              id = data.id;
 
           if (verified) {
             _this2.props.history.push({
               pathname: '/dashboard',
               state: {
-                user: user
+                user: user,
+                userId: id
               }
             });
           }

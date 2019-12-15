@@ -53,7 +53,10 @@ def user_signin():
         is_verified = check_user_password_hash(result, password)
         dict_values = {'verified': is_verified}
 
-        return (jsonify(dict_values), 200) if is_verified else (jsonify(dict_values), 401)
+        user_tuple = result[0]
+        (id, user, _) = user_tuple
+
+        return (jsonify({**dict_values, 'id': id }), 200) if is_verified else (jsonify(dict_values), 401)
     else:
         insert_user = insert_new_user(user, password)
         cursor.executescript(insert_user)
