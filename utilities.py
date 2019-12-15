@@ -24,6 +24,7 @@ def query_blogs_and_user():
 
     sql_query = """
     SELECT
+    posts_id AS 'POST_ID',
     posts.title AS 'TITLE',
     posts.category AS 'CATEGORY',
     posts.ishidden AS 'HIDDEN',
@@ -41,6 +42,7 @@ def query_topic(topic):
 
     sql_query = f"""
     SELECT
+    posts_id AS 'POST_ID',
     posts.title AS 'TITLE',
     posts.category AS CATEGORY,
     posts.ishidden AS 'HIDDEN',
@@ -59,6 +61,7 @@ def get_user_entries(user):
 
     sql_query = f"""
     SELECT
+    posts_id AS 'POST_ID',
     posts.title AS 'TITLE',
     posts.category AS CATEGORY,
     posts.ishidden AS 'HIDDEN',
@@ -85,6 +88,14 @@ def get_users(user):
 
     return sql_query
 
+def del_blog_post(post_id):
+    sql_statement = f"""
+    DELETE FROM table
+    WHERE posts = '{post_id}'';
+    """
+
+    return sql_statement
+
 def check_user_password_hash(result, entered):
     user_tuple = result[0]
     (id, user_name, hashed_password) = user_tuple
@@ -105,7 +116,7 @@ def insert_new_user(user, password):
     return insert_user
 
 def transform_to_dict(val_list):
-    key_config = ('title', 'category', 'isHidden', 'pub_date', 'content', 'user')
+    key_config = ('post_id', 'title', 'category', 'isHidden', 'pub_date', 'content', 'user')
 
     return [
         dict(zip(key_config, val_tup)) for val_tup in val_list 
