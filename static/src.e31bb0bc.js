@@ -74741,6 +74741,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -74770,7 +74776,14 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Dashboard).call(this, props));
     _this.state = {
       blogPosts: [],
-      open: true
+      open: false,
+      formValues: {
+        title: '',
+        category: '',
+        isHidden: '',
+        pub_date: '',
+        content: ''
+      }
     };
     return _this;
   }
@@ -74799,9 +74812,118 @@ function (_Component) {
       }
     }
   }, {
-    key: "editBlogPost",
-    value: function editBlogPost() {
-      console.log('edit');
+    key: "handleChange",
+    value: function handleChange(event) {
+      var target = event.target;
+      var name = target.name,
+          value = target.value;
+      var formValues = this.state.formValues;
+      this.setState({
+        formValues: _objectSpread({}, formValues, _defineProperty({}, name, value))
+      });
+    }
+  }, {
+    key: "clearFormState",
+    value: function clearFormState() {
+      var formValues = this.state.formValues;
+      var formKeys = Object.keys(formValues);
+      var resetValues = formKeys.reduce(function (prev, curr) {
+        return _objectSpread({}, prev, _defineProperty({}, curr, ''));
+      }, {});
+      return resetValues;
+    }
+  }, {
+    key: "blogTemplate",
+    value: function blogTemplate() {
+      var _this3 = this;
+
+      var _this$state = this.state,
+          category = _this$state.category,
+          isHidden = _this$state.isHidden;
+      console.log(this.state, 'STATE FROM BLOG TEMPLATE');
+      return _react.default.createElement("div", {
+        className: "modal-container"
+      }, _react.default.createElement("div", {
+        className: "modal-header"
+      }, _react.default.createElement("h1", {
+        className: "modal-title"
+      }, "New Blog"), _react.default.createElement("span", {
+        className: "modal-close-icon",
+        onClick: function onClick() {
+          return _this3.closeModal();
+        }
+      }, "X")), _react.default.createElement("div", {
+        className: "modal-form"
+      }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Title"), _react.default.createElement("input", {
+        className: "modal-input",
+        type: "text",
+        name: "title",
+        onChange: function onChange(e) {
+          return _this3.handleChange(e);
+        }
+      })), _react.default.createElement("div", {
+        className: "modal-drop-down-container"
+      }, _react.default.createElement("div", {
+        className: "modal-drop-down-item"
+      }, _react.default.createElement("span", null, "Category"), _react.default.createElement("select", {
+        className: "modal-drop-down",
+        value: category,
+        name: "category",
+        onChange: function onChange(e) {
+          return _this3.handleChange(e);
+        }
+      }, _react.default.createElement("option", {
+        value: "all"
+      }, "All"), _react.default.createElement("option", {
+        value: "sports"
+      }, "Sports"), _react.default.createElement("option", {
+        value: "lifestyle"
+      }, "Lifestyle"), _react.default.createElement("option", {
+        value: "politics"
+      }, "Politics"), _react.default.createElement("option", {
+        value: "fashion"
+      }, "Fashion"), _react.default.createElement("option", {
+        value: "architecture"
+      }, "Architecture"), _react.default.createElement("option", {
+        value: "local"
+      }, "Local"), _react.default.createElement("option", {
+        value: "eats"
+      }, "Eats"), _react.default.createElement("option", {
+        value: "home"
+      }, "Home"), _react.default.createElement("option", {
+        value: "finance"
+      }, "Finance"))), _react.default.createElement("div", {
+        className: "modal-drop-down-item"
+      }, _react.default.createElement("span", null, "Hidden"), _react.default.createElement("select", {
+        className: "modal-drop-down",
+        value: isHidden,
+        name: "isHidden",
+        onChange: function onChange(e) {
+          return _this3.handleChange(e);
+        }
+      }, _react.default.createElement("option", {
+        value: "true"
+      }, "True"), _react.default.createElement("option", {
+        value: "false"
+      }, "False")))), _react.default.createElement("div", null, _react.default.createElement("span", null, "Publish Date"), _react.default.createElement("input", {
+        className: "modal-input",
+        name: "pub_date",
+        type: "date",
+        onChange: function onChange(e) {
+          return _this3.handleChange(e);
+        }
+      })), _react.default.createElement("div", null, _react.default.createElement("span", null, "Content"), _react.default.createElement("input", {
+        className: "modal-input",
+        name: "content",
+        type: "text",
+        onChange: function onChange(e) {
+          return _this3.handleChange(e);
+        }
+      }))), _react.default.createElement("div", {
+        className: "modal-button"
+      }, _react.default.createElement("span", {
+        className: "admin-submit-button"
+      }, "SUBMIT")));
     }
   }, {
     key: "deleteBlogPost",
@@ -74818,14 +74940,16 @@ function (_Component) {
   }, {
     key: "closeModal",
     value: function closeModal() {
+      var formValues = this.clearFormState();
       this.setState({
-        open: false
+        open: false,
+        formValues: formValues
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var location = this.props.location;
       var state = location.state;
@@ -74836,7 +74960,7 @@ function (_Component) {
       return _react.default.createElement("div", null, _react.default.createElement(_reactjsPopup.default, {
         open: this.state.open,
         onClose: function onClose() {
-          return _this3.closeModal();
+          return _this4.closeModal();
         },
         contentStyle: {
           padding: "0px",
@@ -74844,52 +74968,7 @@ function (_Component) {
           minHeight: "500px",
           background: "#36D1DC"
         }
-      }, _react.default.createElement("div", {
-        className: "modal-container"
-      }, _react.default.createElement("div", {
-        className: "modal-header"
-      }, _react.default.createElement("h1", {
-        className: "modal-title"
-      }, "Edit"), _react.default.createElement("span", {
-        className: "modal-close-icon",
-        onClick: function onClick() {
-          return _this3.closeModal();
-        }
-      }, "X")), _react.default.createElement("div", {
-        className: "modal-form"
-      }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Title"), _react.default.createElement("input", {
-        className: "modal-input",
-        type: "text"
-      })), _react.default.createElement("div", {
-        className: "modal-drop-down-container"
-      }, _react.default.createElement("div", {
-        className: "modal-drop-down-item"
-      }, _react.default.createElement("span", null, "Category"), _react.default.createElement("select", {
-        className: "modal-drop-down"
-      }, _navConfig.default.map(function (category) {
-        return _react.default.createElement("option", {
-          key: (0, _lodash.uniqueId)(),
-          value: category.toLowerCase()
-        }, category);
-      }))), _react.default.createElement("div", {
-        className: "modal-drop-down-item"
-      }, _react.default.createElement("span", null, "Hidden"), _react.default.createElement("select", {
-        className: "modal-drop-down"
-      }, _react.default.createElement("option", {
-        value: "true"
-      }, "True"), _react.default.createElement("option", {
-        value: "false"
-      }, "False")))), _react.default.createElement("div", null, _react.default.createElement("span", null, "Publish Date"), _react.default.createElement("input", {
-        className: "modal-input",
-        type: "date"
-      })), _react.default.createElement("div", null, _react.default.createElement("span", null, "Content"), _react.default.createElement("input", {
-        className: "modal-input",
-        type: "text"
-      }))), _react.default.createElement("div", {
-        className: "modal-button"
-      }, _react.default.createElement("span", {
-        className: "admin-submit-button"
-      }, "SUBMIT")))), !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
+      }, this.blogTemplate()), !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
         href: "/login"
       }, "login")) : _react.default.createElement("div", {
         className: "dashboard-pane"
@@ -74898,7 +74977,7 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: "admin-add-blog",
         onClick: function onClick() {
-          return _this3.showModal();
+          return _this4.showModal();
         }
       }, _react.default.createElement("h3", null, "Add Blog"))), _react.default.createElement("div", {
         className: "admin-blog-container"
@@ -74927,12 +75006,12 @@ function (_Component) {
         }, " ", blog.category, " "), _react.default.createElement("td", {
           width: "150",
           onClick: function onClick() {
-            return _this3.editBlogPost();
+            return _this4.editBlogPost();
           }
         }, _react.default.createElement("span", null, "Edit")), _react.default.createElement("td", {
           width: "150",
           onClick: function onClick() {
-            return _this3.deleteBlogPost();
+            return _this4.deleteBlogPost();
           }
         }, _react.default.createElement("span", null, "Delete")));
       }))))));
