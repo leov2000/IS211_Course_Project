@@ -74017,10 +74017,16 @@ var Dashboard =
 function (_Component) {
   _inherits(Dashboard, _Component);
 
-  function Dashboard() {
+  function Dashboard(props) {
+    var _this;
+
     _classCallCheck(this, Dashboard);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Dashboard).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Dashboard).call(this, props));
+    _this.state = {
+      blogPosts: []
+    };
+    return _this;
   }
 
   _createClass(Dashboard, [{
@@ -74046,8 +74052,6 @@ function (_Component) {
       var location = this.props.location;
       var state = location.state;
       var user = (0, _lodash.get)(state, 'user', false);
-      console.log(this.state, 'THE STATE');
-      console.log(this.props, 'THEPROPS');
       return _react.default.createElement("div", null, !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
         href: "/login"
       }, "login")) : _react.default.createElement("h2", null, "DASHBOARD HERE"));
