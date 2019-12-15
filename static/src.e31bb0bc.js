@@ -74777,13 +74777,15 @@ function (_Component) {
     _this.state = {
       blogPosts: [],
       open: false,
+      triggerType: '',
       formValues: {
         title: '',
         category: '',
         isHidden: '',
         pub_date: '',
         content: ''
-      }
+      },
+      editValue: []
     };
     return _this;
   }
@@ -74833,24 +74835,79 @@ function (_Component) {
       return resetValues;
     }
   }, {
-    key: "blogTemplate",
-    value: function blogTemplate() {
+    key: "extractFormValues",
+    value: function extractFormValues() {
+      var location = this.props.location;
+      var state = location.state;
+      var formValues = this.state.formValues;
+
+      var requestObject = _objectSpread({}, formValues, {}, state);
+    }
+  }, {
+    key: "handleFormSubmission",
+    value: function handleFormSubmission() {
       var _this3 = this;
 
-      var _this$state = this.state,
-          category = _this$state.category,
-          isHidden = _this$state.isHidden;
-      console.log(this.state, 'STATE FROM BLOG TEMPLATE');
+      var requestObject = this.extractFormValues();
+
+      _axios.default.post('/posts', {
+        requestObject: requestObject
+      }).then(function (res) {
+        console.log(res, 'RES');
+
+        _this3.closeModal();
+      });
+    }
+  }, {
+    key: "extractEditValues",
+    value: function extractEditValues() {
+      var editValue = this.state.editValue;
+      var post_id = editValue.post_id;
+      return {
+        post_id: post_id
+      };
+    }
+  }, {
+    key: "handleEditFormSubmission",
+    value: function handleEditFormSubmission() {
+      var _this4 = this;
+
+      var formValues = this.extractFormValues();
+      var blogPostId = this.extractEditValues();
+
+      var requestObject = _objectSpread({}, formValues, {}, blogPostId);
+
+      _axios.default.put('/posts', {
+        requestObject: requestObject
+      }).then(function (res) {
+        console.log(res, 'RES');
+
+        _this4.closeModal();
+      });
+    }
+  }, {
+    key: "editBlogTemplate",
+    value: function editBlogTemplate() {
+      var _this5 = this;
+
+      var formValues = this.state.formValues;
+      var content = formValues.content,
+          title = formValues.title,
+          pub_date = formValues.pub_date,
+          category = formValues.category,
+          isHidden = formValues.isHidden;
+      var formResult = Object.keys(formValues);
+      console.log(this.state, 'THE STATE FROM EDIT');
       return _react.default.createElement("div", {
         className: "modal-container"
       }, _react.default.createElement("div", {
         className: "modal-header"
       }, _react.default.createElement("h1", {
         className: "modal-title"
-      }, "New Blog"), _react.default.createElement("span", {
+      }, "Edit Blog"), _react.default.createElement("span", {
         className: "modal-close-icon",
         onClick: function onClick() {
-          return _this3.closeModal();
+          return _this5.closeModal();
         }
       }, "X")), _react.default.createElement("div", {
         className: "modal-form"
@@ -74859,8 +74916,9 @@ function (_Component) {
         type: "text",
         name: "title",
         onChange: function onChange(e) {
-          return _this3.handleChange(e);
-        }
+          return _this5.handleChange(e);
+        },
+        value: title
       })), _react.default.createElement("div", {
         className: "modal-drop-down-container"
       }, _react.default.createElement("div", {
@@ -74870,9 +74928,12 @@ function (_Component) {
         value: category,
         name: "category",
         onChange: function onChange(e) {
-          return _this3.handleChange(e);
-        }
+          return _this5.handleChange(e);
+        },
+        required: true
       }, _react.default.createElement("option", {
+        value: ""
+      }, "None"), _react.default.createElement("option", {
         value: "all"
       }, "All"), _react.default.createElement("option", {
         value: "sports"
@@ -74899,9 +74960,12 @@ function (_Component) {
         value: isHidden,
         name: "isHidden",
         onChange: function onChange(e) {
-          return _this3.handleChange(e);
-        }
+          return _this5.handleChange(e);
+        },
+        required: true
       }, _react.default.createElement("option", {
+        value: ""
+      }, "None"), _react.default.createElement("option", {
         value: "true"
       }, "True"), _react.default.createElement("option", {
         value: "false"
@@ -74910,20 +74974,135 @@ function (_Component) {
         name: "pub_date",
         type: "date",
         onChange: function onChange(e) {
-          return _this3.handleChange(e);
+          return _this5.handleChange(e);
+        },
+        value: pub_date
+      })), _react.default.createElement("div", null, _react.default.createElement("span", null, "Content"), _react.default.createElement("input", {
+        className: "modal-input",
+        name: "content",
+        type: "text",
+        onChange: function onChange(e) {
+          return _this5.handleChange(e);
+        },
+        value: content
+      }))), (0, _lodash.every)(formResult, Boolean) ? _react.default.createElement("div", {
+        className: "modal-button"
+      }, _react.default.createElement("span", {
+        className: "admin-submit-button",
+        onClick: function onClick() {
+          return _this5.handleEditFormSubmission();
+        }
+      }, "SUBMIT")) : _react.default.createElement("div", {
+        className: "modal-button"
+      }, _react.default.createElement("span", {
+        className: "admin-submit-button"
+      }, "FILL OUT ALL FIELDS")));
+    }
+  }, {
+    key: "blogTemplate",
+    value: function blogTemplate() {
+      var _this6 = this;
+
+      var formValues = this.state.formValues;
+      var category = formValues.category,
+          isHidden = formValues.isHidden;
+      var formResult = Object.values(formValues);
+      return _react.default.createElement("div", {
+        className: "modal-container"
+      }, _react.default.createElement("div", {
+        className: "modal-header"
+      }, _react.default.createElement("h1", {
+        className: "modal-title"
+      }, "New Blog"), _react.default.createElement("span", {
+        className: "modal-close-icon",
+        onClick: function onClick() {
+          return _this6.closeModal();
+        }
+      }, "X")), _react.default.createElement("div", {
+        className: "modal-form"
+      }, _react.default.createElement("div", null, _react.default.createElement("span", null, "Title"), _react.default.createElement("input", {
+        className: "modal-input",
+        type: "text",
+        name: "title",
+        onChange: function onChange(e) {
+          return _this6.handleChange(e);
+        }
+      })), _react.default.createElement("div", {
+        className: "modal-drop-down-container"
+      }, _react.default.createElement("div", {
+        className: "modal-drop-down-item"
+      }, _react.default.createElement("span", null, "Category"), _react.default.createElement("select", {
+        className: "modal-drop-down",
+        value: category,
+        name: "category",
+        onChange: function onChange(e) {
+          return _this6.handleChange(e);
+        },
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "None"), _react.default.createElement("option", {
+        value: "all"
+      }, "All"), _react.default.createElement("option", {
+        value: "sports"
+      }, "Sports"), _react.default.createElement("option", {
+        value: "lifestyle"
+      }, "Lifestyle"), _react.default.createElement("option", {
+        value: "politics"
+      }, "Politics"), _react.default.createElement("option", {
+        value: "fashion"
+      }, "Fashion"), _react.default.createElement("option", {
+        value: "architecture"
+      }, "Architecture"), _react.default.createElement("option", {
+        value: "local"
+      }, "Local"), _react.default.createElement("option", {
+        value: "eats"
+      }, "Eats"), _react.default.createElement("option", {
+        value: "home"
+      }, "Home"), _react.default.createElement("option", {
+        value: "finance"
+      }, "Finance"))), _react.default.createElement("div", {
+        className: "modal-drop-down-item"
+      }, _react.default.createElement("span", null, "Hidden"), _react.default.createElement("select", {
+        className: "modal-drop-down",
+        value: isHidden,
+        name: "isHidden",
+        onChange: function onChange(e) {
+          return _this6.handleChange(e);
+        },
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "None"), _react.default.createElement("option", {
+        value: "true"
+      }, "True"), _react.default.createElement("option", {
+        value: "false"
+      }, "False")))), _react.default.createElement("div", null, _react.default.createElement("span", null, "Publish Date"), _react.default.createElement("input", {
+        className: "modal-input",
+        name: "pub_date",
+        type: "date",
+        onChange: function onChange(e) {
+          return _this6.handleChange(e);
         }
       })), _react.default.createElement("div", null, _react.default.createElement("span", null, "Content"), _react.default.createElement("input", {
         className: "modal-input",
         name: "content",
         type: "text",
         onChange: function onChange(e) {
-          return _this3.handleChange(e);
+          return _this6.handleChange(e);
         }
-      }))), _react.default.createElement("div", {
+      }))), (0, _lodash.every)(formResult, Boolean) ? _react.default.createElement("div", {
+        className: "modal-button"
+      }, _react.default.createElement("span", {
+        className: "admin-submit-button",
+        onClick: function onClick() {
+          return _this6.handleFormSubmission();
+        }
+      }, "SUBMIT")) : _react.default.createElement("div", {
         className: "modal-button"
       }, _react.default.createElement("span", {
         className: "admin-submit-button"
-      }, "SUBMIT")));
+      }, "FILL OUT ALL FIELDS")));
     }
   }, {
     key: "deleteBlogPost",
@@ -74931,10 +75110,38 @@ function (_Component) {
       console.log('delete');
     }
   }, {
-    key: "showModal",
-    value: function showModal() {
+    key: "pluckValuesFromEdit",
+    value: function pluckValuesFromEdit(editObj) {
+      var content = editObj.content,
+          title = editObj.title,
+          pub_date = editObj.pub_date,
+          category = editObj.category,
+          isHidden = editObj.isHidden;
+      return {
+        content: content,
+        title: title,
+        pub_date: pub_date,
+        category: category,
+        isHidden: isHidden
+      };
+    }
+  }, {
+    key: "showEditBlogModal",
+    value: function showEditBlogModal(triggerType, index, array) {
+      var formValues = this.pluckValuesFromEdit(array[index]);
       this.setState({
-        open: true
+        open: true,
+        triggerType: triggerType,
+        editValue: array[index],
+        formValues: formValues
+      });
+    }
+  }, {
+    key: "showBlogModal",
+    value: function showBlogModal(triggerType) {
+      this.setState({
+        open: true,
+        triggerType: triggerType
       });
     }
   }, {
@@ -74949,18 +75156,20 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this7 = this;
 
       var location = this.props.location;
       var state = location.state;
       var user = (0, _lodash.get)(state, 'user', false);
-      var blogPosts = this.state.blogPosts;
+      var _this$state = this.state,
+          blogPosts = _this$state.blogPosts,
+          triggerType = _this$state.triggerType;
       console.log(blogPosts, 'BLOGPOSTS HERE');
       console.log(this.state, 'THE STATE HERE');
       return _react.default.createElement("div", null, _react.default.createElement(_reactjsPopup.default, {
         open: this.state.open,
         onClose: function onClose() {
-          return _this4.closeModal();
+          return _this7.closeModal();
         },
         contentStyle: {
           padding: "0px",
@@ -74968,7 +75177,7 @@ function (_Component) {
           minHeight: "500px",
           background: "#36D1DC"
         }
-      }, this.blogTemplate()), !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
+      }, triggerType === 'blog' ? this.blogTemplate() : triggerType === 'edit' ? this.editBlogTemplate() : _react.default.createElement("div", null)), !user ? _react.default.createElement("h2", null, "SOMETHING WEIRD HAPPEN. PLEASE LOGIN FROM ", _react.default.createElement("a", {
         href: "/login"
       }, "login")) : _react.default.createElement("div", {
         className: "dashboard-pane"
@@ -74977,13 +75186,13 @@ function (_Component) {
       }, _react.default.createElement("span", {
         className: "admin-add-blog",
         onClick: function onClick() {
-          return _this4.showModal();
+          return _this7.showBlogModal('blog');
         }
       }, _react.default.createElement("h3", null, "Add Blog"))), _react.default.createElement("div", {
         className: "admin-blog-container"
       }, _react.default.createElement("table", {
         className: "admin-blog-table"
-      }, _react.default.createElement("caption", null, _react.default.createElement("h2", null, user, " Blog Posts")), _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Content"), _react.default.createElement("th", null, "Post Hidden"), _react.default.createElement("th", null, "Publish Date"), _react.default.createElement("th", null, "Category"), _react.default.createElement("th", null, "Edit"), _react.default.createElement("th", null, "Delete"))), _react.default.createElement("tbody", null, blogPosts.map(function (blog) {
+      }, _react.default.createElement("caption", null, _react.default.createElement("h2", null, user, " Blog Posts")), _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Content"), _react.default.createElement("th", null, "Post Hidden"), _react.default.createElement("th", null, "Publish Date"), _react.default.createElement("th", null, "Category"), _react.default.createElement("th", null, "Edit"), _react.default.createElement("th", null, "Delete"))), _react.default.createElement("tbody", null, blogPosts.map(function (blog, idx, arr) {
         return _react.default.createElement("tr", {
           key: (0, _lodash.uniqueId)()
         }, _react.default.createElement("td", {
@@ -75006,12 +75215,12 @@ function (_Component) {
         }, " ", blog.category, " "), _react.default.createElement("td", {
           width: "150",
           onClick: function onClick() {
-            return _this4.editBlogPost();
+            return _this7.showEditBlogModal('edit', idx, arr);
           }
         }, _react.default.createElement("span", null, "Edit")), _react.default.createElement("td", {
           width: "150",
           onClick: function onClick() {
-            return _this4.deleteBlogPost();
+            return _this7.deleteBlogPost();
           }
         }, _react.default.createElement("span", null, "Delete")));
       }))))));
