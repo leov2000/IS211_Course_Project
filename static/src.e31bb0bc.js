@@ -74076,11 +74076,13 @@ function (_Component) {
         href: "/login"
       }, "login")) : _react.default.createElement("div", {
         className: "dashboard-pane"
-      }, _react.default.createElement("div", null, _react.default.createElement("div", null, _react.default.createElement("span", null, "Add Blog"))), _react.default.createElement("div", {
+      }, _react.default.createElement("div", null, _react.default.createElement("div", null, _react.default.createElement("h3", {
+        className: "admin-add-blog"
+      }, "Add Blog"))), _react.default.createElement("div", {
         className: "admin-blog-container"
       }, _react.default.createElement("table", {
         className: "admin-blog-table"
-      }, _react.default.createElement("caption", null, user, " Blog Posts"), _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Content"), _react.default.createElement("th", null, "Post Hidden"), _react.default.createElement("th", null, "Publish Date"), _react.default.createElement("th", null, "Category"), _react.default.createElement("th", null, "Edit"), _react.default.createElement("th", null, "Delete"))), _react.default.createElement("tbody", null, blogPosts.map(function (blog) {
+      }, _react.default.createElement("caption", null, _react.default.createElement("h2", null, user, " Blog Posts")), _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Content"), _react.default.createElement("th", null, "Post Hidden"), _react.default.createElement("th", null, "Publish Date"), _react.default.createElement("th", null, "Category"), _react.default.createElement("th", null, "Edit"), _react.default.createElement("th", null, "Delete"))), _react.default.createElement("tbody", null, blogPosts.map(function (blog) {
         return _react.default.createElement("tr", {
           key: (0, _lodash.uniqueId)()
         }, _react.default.createElement("td", {
