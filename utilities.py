@@ -143,3 +143,18 @@ def convert_to_model(req_dict):
     content = req_dict.get('content')
 
     return (users_id, title, category, ishidden, published, content)
+
+def update_blog_post(update_tup, post_id):
+    (users_id, title, category, ishidden, published, content) = update_tup
+
+    blog_update = f"""
+    UPDATE posts
+    SET users_id = '{users_id}',
+        title = '{title}',
+        category = '{category}',
+        ishidden = '{ishidden}',
+        published = '{published}',
+        content = '{content}'
+    WHERE posts_id = '{post_id}';
+    """
+    return blog_update
