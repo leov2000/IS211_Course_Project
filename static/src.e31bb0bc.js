@@ -74842,6 +74842,8 @@ function (_Component) {
       var formValues = this.state.formValues;
 
       var requestObject = _objectSpread({}, formValues, {}, state);
+
+      return requestObject;
     }
   }, {
     key: "handleFormSubmission",
@@ -75106,8 +75108,19 @@ function (_Component) {
     }
   }, {
     key: "deleteBlogPost",
-    value: function deleteBlogPost() {
-      console.log('delete');
+    value: function deleteBlogPost(index, array) {
+      var location = this.props.location;
+      var state = location.state;
+      var blogPost = array[index];
+      var post_id = blogPost.post_id;
+
+      var requestObject = _objectSpread({}, state, {}, post_id);
+
+      _axios.default.delete('/posts', {
+        requestObject: requestObject
+      }).then(function (res) {
+        console.log(res, 'RES');
+      });
     }
   }, {
     key: "pluckValuesFromEdit",
@@ -75164,8 +75177,6 @@ function (_Component) {
       var _this$state = this.state,
           blogPosts = _this$state.blogPosts,
           triggerType = _this$state.triggerType;
-      console.log(blogPosts, 'BLOGPOSTS HERE');
-      console.log(this.state, 'THE STATE HERE');
       return _react.default.createElement("div", null, _react.default.createElement(_reactjsPopup.default, {
         open: this.state.open,
         onClose: function onClose() {
@@ -75220,7 +75231,7 @@ function (_Component) {
         }, _react.default.createElement("span", null, "Edit")), _react.default.createElement("td", {
           width: "150",
           onClick: function onClick() {
-            return _this7.deleteBlogPost();
+            return _this7.deleteBlogPost(idx, arr);
           }
         }, _react.default.createElement("span", null, "Delete")));
       }))))));
