@@ -74855,9 +74855,15 @@ function (_Component) {
       _axios.default.post('/posts', {
         requestObject: requestObject
       }).then(function (res) {
-        console.log(res, 'RES');
+        var data = res.data;
 
-        _this3.closeModal();
+        var formValues = _this3.clearFormState();
+
+        _this3.setState({
+          open: false,
+          formValues: formValues,
+          blogPosts: data
+        });
       });
     }
   }, {
@@ -75104,8 +75110,6 @@ function (_Component) {
       }, _react.default.createElement("option", {
         value: ""
       }, "None"), _react.default.createElement("option", {
-        value: "all"
-      }, "All"), _react.default.createElement("option", {
         value: "sports"
       }, "Sports"), _react.default.createElement("option", {
         value: "lifestyle"
