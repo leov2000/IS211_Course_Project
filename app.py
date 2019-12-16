@@ -61,7 +61,18 @@ def user_signin():
         insert_user = insert_new_user(user, password)
         cursor.executescript(insert_user)
 
-        return (jsonify({'verified': True}), 200)
+        cursor.execute(query)
+        next_result = cursor.fetchall()
+
+        print(next_result, "next-result")
+
+        is_verified = check_user_password_hash(next_result, password)
+        dict_values = {'verified': is_verified}
+        
+        user_tuple = next_result[0]
+        (id, user, _) = user_tuple
+
+        return (jsonify({'verified': True, 'id': id}), 200)
 
 @app.route('/admin')
 def admin_view():
