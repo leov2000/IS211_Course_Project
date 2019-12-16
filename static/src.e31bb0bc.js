@@ -74888,9 +74888,15 @@ function (_Component) {
       _axios.default.put('/posts', {
         requestObject: requestObject
       }).then(function (res) {
-        console.log(res, 'RES');
+        var data = res.data;
 
-        _this4.closeModal();
+        var formValues = _this4.clearFormState();
+
+        _this4.setState({
+          open: false,
+          formValues: formValues,
+          blogPosts: data
+        });
       });
     }
   }, {
