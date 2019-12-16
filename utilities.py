@@ -90,8 +90,8 @@ def get_users(user):
 
 def del_blog_post(post_id):
     sql_statement = f"""
-    DELETE FROM table
-    WHERE posts = '{post_id}'';
+    DELETE FROM posts
+    WHERE posts_id = '{post_id}';
     """
 
     return sql_statement
