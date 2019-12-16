@@ -76,7 +76,6 @@ def admin_view():
 
     return jsonify(dict_values)
 
-
 @app.route('/posts', methods=['PUT'])
 def update_post():
     parsed = json.loads(request.data)
@@ -98,7 +97,6 @@ def update_post():
 
     return jsonify(dict_values)
 
-
 @app.route('/posts', methods=['POST'])
 def insert_post():
     parsed = json.loads(request.data)
@@ -118,7 +116,6 @@ def insert_post():
     dict_values = transform_to_dict(result)
 
     return jsonify(dict_values)
-
 
 @app.route('/posts', methods=['DELETE'])
 def delete_post():

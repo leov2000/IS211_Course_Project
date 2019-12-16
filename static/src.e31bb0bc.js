@@ -74731,8 +74731,6 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _reactjsPopup = _interopRequireDefault(require("reactjs-popup"));
 
-var _navConfig = _interopRequireDefault(require("../../config/nav-config"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -74918,7 +74916,6 @@ function (_Component) {
           requestObject: requestObject
         }
       }).then(function (res) {
-        console.log(res, 'RES');
         var data = res.data;
 
         _this5.setState({
@@ -74982,7 +74979,6 @@ function (_Component) {
           category = formValues.category,
           isHidden = formValues.isHidden;
       var formResult = Object.keys(formValues);
-      console.log(this.state, 'THE STATE FROM EDIT');
       return _react.default.createElement("div", {
         className: "modal-container"
       }, _react.default.createElement("div", {
@@ -75267,7 +75263,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = Dashboard;
-},{"react":"../node_modules/react/index.js","lodash":"../node_modules/lodash/lodash.js","axios":"../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js","../../config/nav-config":"config/nav-config.js"}],"components/landing/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","lodash":"../node_modules/lodash/lodash.js","axios":"../node_modules/axios/index.js","reactjs-popup":"../node_modules/reactjs-popup/reactjs-popup.es.js"}],"components/landing/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
