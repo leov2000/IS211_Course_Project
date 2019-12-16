@@ -3,7 +3,7 @@ import random
 import json 
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-from utilities import query_blogs_and_user, transform_to_dict, query_topic, get_users, check_user_password_hash, insert_new_user, get_user_entries, insert_blog, convert_to_model, del_blog_post
+from utilities import query_blogs_and_user, transform_to_dict, query_topic, get_users, check_user_password_hash, insert_new_user, get_user_entries, insert_blog, convert_to_model, del_blog_post, update_blog_post
 
 app = Flask(__name__)
 conn = sqlite3.connect('blog.db', check_same_thread=False)
@@ -79,10 +79,25 @@ def admin_view():
 
 @app.route('/posts', methods=['PUT'])
 def update_post():
-    return ""
-    #search for post
-    # update post here
-    #send back successful JSON response
+    parsed = json.loads(request.data)
+    request_object = parsed.get('requestObject')
+    request_tuple = convert_to_model(request_object)
+
+    post_id = request_object.get('post_id')
+    user_name = request_object.get('user')
+
+    update_statement = update_blog_post(request_tuple, post_id)
+    cursor = conn.cursor()
+    cursor.executescript(update_statement)
+
+    query = get_user_entries(user_name)
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    dict_values = transform_to_dict(result)
+
+    return jsonify(dict_values)
+
 
 @app.route('/posts', methods=['POST'])
 def insert_post():
@@ -126,11 +141,6 @@ def delete_post():
     dict_values = transform_to_dict(result)
 
     return jsonify(dict_values)
-
-    # search for post
-    # delete post 
-    # send back successful JSON response
-
 
 if __name__ == '__main__':
     app.run(debug=True)
