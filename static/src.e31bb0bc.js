@@ -74888,6 +74888,66 @@ function (_Component) {
       });
     }
   }, {
+    key: "deleteBlogPost",
+    value: function deleteBlogPost(index, array) {
+      var location = this.props.location;
+      var state = location.state;
+      var blogPost = array[index];
+      var post_id = blogPost.post_id;
+
+      var requestObject = _objectSpread({}, state, {}, post_id);
+
+      _axios.default.delete('/posts', {
+        requestObject: requestObject
+      }).then(function (res) {
+        console.log(res, 'RES');
+      });
+    }
+  }, {
+    key: "pluckValuesFromEdit",
+    value: function pluckValuesFromEdit(editObj) {
+      var content = editObj.content,
+          title = editObj.title,
+          pub_date = editObj.pub_date,
+          category = editObj.category,
+          isHidden = editObj.isHidden;
+      return {
+        content: content,
+        title: title,
+        pub_date: pub_date,
+        category: category,
+        isHidden: isHidden
+      };
+    }
+  }, {
+    key: "showEditBlogModal",
+    value: function showEditBlogModal(triggerType, index, array) {
+      var formValues = this.pluckValuesFromEdit(array[index]);
+      this.setState({
+        open: true,
+        triggerType: triggerType,
+        editValue: array[index],
+        formValues: formValues
+      });
+    }
+  }, {
+    key: "showBlogModal",
+    value: function showBlogModal(triggerType) {
+      this.setState({
+        open: true,
+        triggerType: triggerType
+      });
+    }
+  }, {
+    key: "closeModal",
+    value: function closeModal() {
+      var formValues = this.clearFormState();
+      this.setState({
+        open: false,
+        formValues: formValues
+      });
+    }
+  }, {
     key: "editBlogTemplate",
     value: function editBlogTemplate() {
       var _this5 = this;
@@ -75107,66 +75167,6 @@ function (_Component) {
       }, "FILL OUT ALL FIELDS")));
     }
   }, {
-    key: "deleteBlogPost",
-    value: function deleteBlogPost(index, array) {
-      var location = this.props.location;
-      var state = location.state;
-      var blogPost = array[index];
-      var post_id = blogPost.post_id;
-
-      var requestObject = _objectSpread({}, state, {}, post_id);
-
-      _axios.default.delete('/posts', {
-        requestObject: requestObject
-      }).then(function (res) {
-        console.log(res, 'RES');
-      });
-    }
-  }, {
-    key: "pluckValuesFromEdit",
-    value: function pluckValuesFromEdit(editObj) {
-      var content = editObj.content,
-          title = editObj.title,
-          pub_date = editObj.pub_date,
-          category = editObj.category,
-          isHidden = editObj.isHidden;
-      return {
-        content: content,
-        title: title,
-        pub_date: pub_date,
-        category: category,
-        isHidden: isHidden
-      };
-    }
-  }, {
-    key: "showEditBlogModal",
-    value: function showEditBlogModal(triggerType, index, array) {
-      var formValues = this.pluckValuesFromEdit(array[index]);
-      this.setState({
-        open: true,
-        triggerType: triggerType,
-        editValue: array[index],
-        formValues: formValues
-      });
-    }
-  }, {
-    key: "showBlogModal",
-    value: function showBlogModal(triggerType) {
-      this.setState({
-        open: true,
-        triggerType: triggerType
-      });
-    }
-  }, {
-    key: "closeModal",
-    value: function closeModal() {
-      var formValues = this.clearFormState();
-      this.setState({
-        open: false,
-        formValues: formValues
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this7 = this;
@@ -75199,7 +75199,7 @@ function (_Component) {
         onClick: function onClick() {
           return _this7.showBlogModal('blog');
         }
-      }, _react.default.createElement("h3", null, "Add Blog"))), _react.default.createElement("div", {
+      }, _react.default.createElement("h3", null, "Add Blog"))), !(0, _lodash.isEmpty)(blogPosts) ? _react.default.createElement("div", {
         className: "admin-blog-container"
       }, _react.default.createElement("table", {
         className: "admin-blog-table"
@@ -75225,16 +75225,20 @@ function (_Component) {
           key: (0, _lodash.uniqueId)()
         }, " ", blog.category, " "), _react.default.createElement("td", {
           width: "150",
+          className: "cursor-td-cell",
           onClick: function onClick() {
             return _this7.showEditBlogModal('edit', idx, arr);
           }
         }, _react.default.createElement("span", null, "Edit")), _react.default.createElement("td", {
           width: "150",
+          className: "cursor-td-cell",
           onClick: function onClick() {
             return _this7.deleteBlogPost(idx, arr);
           }
         }, _react.default.createElement("span", null, "Delete")));
-      }))))));
+      })))) : _react.default.createElement("div", {
+        className: "no-blog-message"
+      }, _react.default.createElement("h2", null, "You Currently Have No Blog Posts"))));
     }
   }]);
 

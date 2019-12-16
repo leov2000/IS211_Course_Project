@@ -263,4 +263,13 @@ td {
     justify-content: center;
 }
 
+.no-blog-message {
+    display: flex;
+    justify-content: center;
+}
+
+.cursor-td-cell {
+    cursor: pointer;
+} 
+
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
