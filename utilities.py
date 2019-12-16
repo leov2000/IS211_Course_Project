@@ -122,4 +122,24 @@ def transform_to_dict(val_list):
         dict(zip(key_config, val_tup)) for val_tup in val_list 
     ]
 
+def insert_blog(insert_tup):
+    (users_id, title, category, ishidden, published, content) = insert_tup
 
+    blog_insert = f"""
+    INSERT INTO posts
+    (users_id, title, category, ishidden, published, content)
+    VALUES
+    ('{users_id}',"{title}", '{category}', '{ishidden}', '{published}', "{content}" );
+    """
+
+    return blog_insert
+
+def convert_to_model(req_dict):
+    users_id = req_dict.get('userId')
+    title = req_dict.get('title')
+    category = req_dict.get('category')
+    ishidden =  req_dict.get('isHidden')
+    published = req_dict.get('pub_date')
+    content = req_dict.get('content')
+
+    return (users_id, title, category, ishidden, published, content)
